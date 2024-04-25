@@ -1,0 +1,43 @@
+<div class="table-responsive" id="base" data="{{ content.base }}">
+  {% if content.default %}
+    <div>You`re default list is <a href="{{ content.base }}/admin/config/active-campaign/lists/default/{{ content.default.id }}">{{ content.default.name }}</a></div>
+  {% endif %}
+  <table id="list-table" class="table table-striped-columns" ids="{{ content.data }}">
+    <thead>
+    <tr>
+      <td class="selections-all"></td>
+      <th scope="col">List ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Created Date</th>
+      <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for list in content.lists  %}
+      <tr>
+        <td class="selections"></td>
+        <th scope="row">{{ list.id }}</th>
+        <td>{{ list.name }}</td>
+        <td>{{ list.cdate }}</td>
+        <td>
+          <div class="dropdown">
+            <button class="dropbtn">actions</button>
+            <div class="dropdown-content">
+              <a class="dropdown-item" href="{{ content.base }}/admin/config/active-campaign/lists/delete/{{ list.id }}">Delete</a>
+              <a class="dropdown-item" href="{{ content.base }}/admin/config/active-campaign/lists/default/{{ list.id }}">Details</a>
+              {% if list.is_default_list %}
+                <a class="dropdown-item" href="{{ content.base }}/admin/config/active-campaign/lists/default/{{ list.id }}?action=disable">Defaulted</a>
+              {% else %}
+                <a class="dropdown-item" href="{{ content.base }}/admin/config/active-campaign/lists/default/{{ list.id }}?action=enable">Use As Default</a>
+              {% endif %}
+            </div>
+          </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div id="selected-actions">
+
+</div>

@@ -1,0 +1,21 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Form Label</th>
+    <th scope="col">Form ID</th>
+    <th scope="col">Action</th>
+  </tr>
+  </thead>
+  <tbody>{% for form in content.forms %}
+  <tr>
+    <td>{{ form['label'] }}</td>
+    <td>{{ form['form'] }}</td>
+    <td>
+      <a class=""
+        href="/active/web/admin/config/active-campaign-form-map/{{ form['id'] }}">
+        Configure
+      </a>
+    </td>
+  </tr>
+  {% endfor %}</tbody>
+</table>

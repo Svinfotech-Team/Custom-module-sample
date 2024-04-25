@@ -1,0 +1,14 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Action</th>
+  </tr>
+  </thead>
+  <tbody>{% for item in content.map %}
+    <tr>
+      <td>{{ item.name }}</td>
+      <td><a href="{{ item.action }}">{{ item.text }}</a></td>
+    </tr>
+  {% endfor %}</tbody>
+</table>

@@ -1,0 +1,11 @@
+active_campaign_api_integration.dashboard:
+  title: 'Campaign Dashboard'
+  parent: 'system.admin_config'
+  route_name: active_campaign_api_integration.dashboard
+  menu_name: 'account-menu'
+  description: 'View the Campaign Dashboard.'
+  weight: 0
+  options:
+    attributes:
+      class:
+        - custom-menu-item-class

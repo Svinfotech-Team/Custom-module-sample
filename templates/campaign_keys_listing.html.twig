@@ -1,0 +1,18 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">ID</th>
+    <th scope="col">URL</th>
+    <th scope="col">KEY</th>
+  </tr>
+  </thead>
+  <tbody>{% for token in content.tokens %}
+    <tr>
+      <td>{{ token['id'] }}</td>
+      <td>{{ token['url'] }}</td>
+      <td>
+        {{ token['key'] }}
+      </td>
+    </tr>
+  {% endfor %}</tbody>
+</table>

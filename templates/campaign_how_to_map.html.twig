@@ -1,0 +1,44 @@
+<div class="m-codestyle">
+  <div class="container">
+  <div class="row">
+    <p>
+      This is how to do mapping in mapping form. Lets assume you have your form
+      with these fields
+      <ul>
+      <li>article_title</li>
+      <li>article_body</li>
+      ...
+    </ul>
+    Now you want to map these fields of form to your custom fields on
+    ActiveCampaign, These custom field on ActiveCampaign have names
+    <ul>
+      <li>ARTICLE_TITLE</li>
+      <li>ARTICLE_BODY</li>
+      ...
+    </ul>
+    </p>
+    <p class="code mapping">
+      From the above lists we can make this mapping <br>
+      {<br>
+      "field_my_title": {<br>
+      &nbsp;&nbsp;    "ac_field": "ARTICLE_TITLE",<br>
+      &nbsp;&nbsp;    "ac_type": "Text Input"<br>
+      },<br>
+      "field_my_body": {<br>
+      &nbsp;&nbsp;    "ac_field": "ARTICLE_BODY",<br>
+      &nbsp;&nbsp;    "ac_type": "Text Input"<br>
+      },<br>
+      "field_poster_email": {<br>
+      &nbsp;&nbsp;    "ac_field": "EMAIL",<br>
+      &nbsp;&nbsp;    "ac_type": "Text Input"<br>
+      },<br>
+      "field_poster_name": {<br>
+      &nbsp;&nbsp;   "ac_field": "FIRSTNAME",<br>
+      &nbsp;&nbsp;    "ac_type": "Text Input"<br>
+      }<br>
+      }<br><br>
+      <br>
+    </p>
+  </div>
+ </div>
+</div>

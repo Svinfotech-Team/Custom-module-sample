@@ -1,0 +1,91 @@
+<div class="list-info">
+  <div class="head">
+    <h2>{{ content.list.name }}</h2>
+  </div>
+  <div class="all-list-info">
+    <ul>
+      <li><strong>Created On:</strong> {{ content.list.cdate }}</li>
+      <li>
+        {% if content.list.send_last_broadcast %}
+          <strong>Send Last Broadcast:</strong> {{ 'Allowed' }}
+        {% else %}
+          <strong>Send Last Broadcast:</strong> {{ 'Not Given' }}
+        {% endif %}
+      </li>
+      <li>
+        {% if content.list.carboncopy %}
+          <strong>Carbon Copy:</strong> {{ content.list.carboncopy }}
+        {% else %}
+          <strong>Carbon Copy:</strong> {{ 'Not Given' }}
+        {% endif %}
+      </li>
+      <li>
+        {% if content.list.subscription_notify %}
+          <strong>Subscription Notification:</strong>  {{ content.list.subscription_notify }}
+        {% else %}
+          <strong>Subscription Notification:</strong> {{ 'Not Given' }}
+        {% endif %}
+      </li>
+      <li>
+        {% if content.list.unsubscription_notify %}
+          <strong>Unsubscription Notification:</strong>  {{ content.list.unsubscription_notify }}
+        {% else %}
+          <strong>Unsubscription Notification:</strong> {{ 'Not Given' }}
+        {% endif %}
+      </li>
+      <li>
+        {% if content.list.sender_url %}
+          <strong>Sender URL:</strong>  {{ content.list.sender_url }}
+        {% else %}
+          <strong>Sender URL:</strong> {{ 'Not Given' }}
+        {% endif %}
+      </li>
+      <li>
+        {% if content.list.sender_reminder %}
+          <strong>Sender Reminder:</strong>  {{ content.list.sender_reminder }}
+        {% else %}
+          <strong>Sender Reminder:</strong> {{ 'Not Given' }}
+        {% endif %}
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="table-responsive" id="base" data="{{ content.base }}" data-un="yes">
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th><input type="checkbox" id="select-all"></th>
+      <th scope="col">FirstName</th>
+      <th scope="col">LastName</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for list_id, list in content.contacts %}
+      {% for contact in list %}
+        <tr class="list-unchanged" data="{{ list_id }}">
+          <td><input type="checkbox" value="{{ contact.id }}" class="single-check"></td>
+          <td>{{ contact.firstName }}</td>
+          <td>{{ contact.lastName }}</td>
+          <td>{{ contact.email }}</td>
+          <td>{{ contact.phone }}</td>
+          <td>
+            <div class="dropdown">
+              <button class="dropbtn">actions</button>
+              <div class="dropdown-content">
+                <a class="dropdown-item" href="{{ content.base }}/admin/config/active-campaign/lists/unsubscribe/{{ contact.id }}/{{ list_id }}">Unsubscribe</a>
+              </div>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div id="selected-actions">
+
+</div>

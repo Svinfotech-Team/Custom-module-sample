@@ -1,0 +1,438 @@
+<div id="campaign_wrapper" class="container p-5 border rounded bg-light">
+  <div class="container">
+    <div class="tabcontent">
+      <ul class="nav nav-tabs">
+        <button class="list-group-item">
+          <a class="nav-link active" id="tab-kadd" data-bs-toggle="tab" href="{{ content.links.kadd }}">Add Api Keys</a>
+        </button>
+        <button class="list-group-item">
+          <a class="nav-link" id="tab-klist" data-bs-toggle="tab" href="{{ content.links.klist }}">Check Keys</a>
+        </button>
+        <button class="list-group-item">
+          <a class="nav-link" id="tab-mapping" data-bs-toggle="tab" href="{{ content.links.userList }}">ActiveCampaign Mapping Listing</a>
+        </button>
+        <button class="list-group-item">
+          <a class="nav-link" id="tab-register" data-bs-toggle="tab" href="{{ content.links.regi}}">User Registration Form</a>
+        </button>
+        <button class="list-group-item">
+          <a class="nav-link" id="tab-list" data-bs-toggle="tab" href="{{ content.links.alist}}">ActiveCampaign Lists</a>
+        </button>
+        <button class="list-group-item">
+          <a class="nav-link" id="tab-contacts" data-bs-toggle="tab" href="{{ content.links.contacts}}">ActiveCampaign Contacts</a>
+        </button>
+        <button class="list-group-item">
+          <a class="nav-link" id="tab-stages" data-bs-toggle="tab" href="{{ content.links.stages}}">ActiveCampaign Stages</a>
+        </button>
+        <button class="list-group-item">
+          <a class="nav-link" id="tab-pipeline" data-bs-toggle="tab" href="{{ content.links.pipelines}}">ActiveCampaign Pipelines</a>
+        </button>
+      </ul>
+    </div>
+
+    {% if content.campaigns %}
+    <div class="col-8 lead instructions">
+      <h2>Campaigns Found</h2>
+    <button class="accordion">ActiveCampaign Available Campaign</button>
+    <div class="panel">
+      <div class="campaigns">
+        <div class="grid-container">
+          {% for campaign in content.campaigns %}
+            <div class="grid-item">
+              <h4>{{ campaign.name }}</h4>
+              <span>created on {{ campaign.cdate }}</span>
+              {% if campaign.screenshot %}
+                <img src="https:{{ campaign.screenshot }}" alt="{{ campaign.name }}">
+              {%  endif %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    </div>
+    {% endif %}
+
+    <div class="col-8 lead instructions">
+
+      <h2>Usage Instructions</h2>
+      <button class="accordion">ActiveCampaign Integration API</button>
+      <div class="panel">
+        <ol>
+          <li>
+            <p><strong>Access ActiveCampaign Dashboard:</strong> Log in to your ActiveCampaign account.</p>
+          </li>
+          <li>
+            <p><strong>Navigate to the Developer Tab:</strong></p>
+            <ul>
+              <li>Once logged in, go to the "Settings" section (usually located in the bottom left corner).</li>
+              <li>Select the "Developer" option from the <code>menu.</code></li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Retrieve API Key:</strong></p>
+            <ul>
+              <li>In the Developer section, you'll find your API key. If you don&rsquo;t have one yet, generate a new key.</li>
+              <li>Note down the generated API Key as you'll need it to integrate ActiveCampaign with Drupal.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Go to Your Drupal Admin Panel:</strong></p>
+            <ul>
+              <li>Log in to your Drupal website's admin panel.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Locate the ActiveCampaign Integration Section:</strong></p>
+            <ul>
+              <li>Look for the section or module responsible for ActiveCampaign integration. If you're using a specific module or plugin for this purpose, navigate there.</li>
+              <li>Usually, there is a dedicated section for adding API keys.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Access the "Add API Keys" Tab or Form:</strong></p>
+            <ul>
+              <li>Inside the ActiveCampaign integration settings, find and click on the "Add API Keys" tab or option.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Fill in the Required Fields:</strong></p>
+            <ul>
+              <li>Once you're in the "Add API Keys" tab or form, you'll typically find two fields:
+                <ul>
+                  <li><strong>URL:</strong> This is where you input the URL related to your ActiveCampaign account, usually something like <code>https://youraccountname.api-us1.com</code>.</li>
+                  <li><strong>API Key:</strong> Input the API Key you obtained from the ActiveCampaign Developer section.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Save or Update the Changes:</strong></p>
+            <ul>
+              <li>After entering the URL and API Key, ensure to save or update the changes as required by your Drupal setup.</li>
+            </ul>
+          </li>
+        </ol>
+        <p>Remember to double-check the accuracy of the URL and API Key as any discrepancies or typos might result in integration issues. Once saved, the integration should be complete, allowing your Drupal site to communicate with ActiveCampaign using the provided keys.</p>
+      </div>
+
+      <button class="accordion">To map a registration form to ActiveCampaign for contact creation, you'll typically follow these steps:</button>
+      <div class="panel">
+        <p>
+        <ol>
+          <li>
+            <p><strong>Access User Registration Form Settings:</strong></p>
+            <ul>
+              <li>Log in to your Drupal admin panel.</li>
+              <li>Navigate to the settings related to user registration forms.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Open the User Registration Form:</strong></p>
+            <ul>
+              <li>Find and click on the "User Registration Form" tab or option within the settings.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Select Fields for Contact Creation:</strong></p>
+            <ul>
+              <li>A page displaying the registration form fields will appear.</li>
+              <li>Check the checkboxes in front of each field that you want to include for contact creation in ActiveCampaign.</li>
+              <li>Note: The email field is usually mandatory and should be selected by default.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Submit the Form:</strong></p>
+            <ul>
+              <li>After selecting the desired fields, submit the form.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Map Default Fields in ActiveCampaign:</strong></p>
+            <ul>
+              <li>The next page will typically display default fields from ActiveCampaign as select fields.</li>
+              <li>Choose the corresponding fields from the registration form that will match these default fields in ActiveCampaign.</li>
+              <li>For example, map the registration form's "First Name" field to ActiveCampaign's "First Name" field.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Map Custom Fields in ActiveCampaign:</strong></p>
+            <ul>
+              <li>On the same page, there will likely be a section displaying custom fields from ActiveCampaign as select fields.</li>
+              <li>Select the appropriate options from the registration form fields that correspond to these custom fields in ActiveCampaign.</li>
+              <li>For instance, if ActiveCampaign has a custom field for "Job Title," match it with the relevant field from the registration form.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Submit the Form to Complete Mapping:</strong></p>
+            <ul>
+              <li>Once you've selected the appropriate fields for both default and custom fields in ActiveCampaign, submit the form.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Confirmation and Testing:</strong></p>
+            <ul>
+              <li>After submission, there might be a confirmation message indicating successful mapping.</li>
+              <li>Test the registration form to ensure that the selected fields are indeed being integrated and passed correctly to ActiveCampaign when a user registers.</li>
+            </ul>
+          </li>
+        </ol>
+        <p>Remember, Always ensure you save the changes after mapping the fields to establish the connection between your registration form and ActiveCampaign successfully.</p>
+        </p>
+      </div>
+
+      <button class="accordion">To switch between different mappings for contact creation in ActiveCampaign within Drupal, follow these steps:</button>
+      <div class="panel">
+        <p><ol>
+          <li>
+            <p><strong>Access the ActiveCampaign Mapping Listing:</strong></p>
+            <ul>
+              <li>Log in to your Drupal admin panel.</li>
+              <li>Look for a section or tab named "ActiveCampaign Mapping Listing." This section typically contains a list of all previously created mappings.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>View the Mapping List:</strong></p>
+            <ul>
+              <li>Within the "ActiveCampaign Mapping Listing," you'll see a list of mappings that have been created previously.</li>
+              <li>Each mapping entry should display information such as the date of creation or a description to help identify them.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Select the Desired Mapping:</strong></p>
+            <ul>
+              <li>Identify the mapping that you want to activate or switch to for contact creation.</li>
+              <li>Usually, there will be an "Enable" link or button corresponding to each mapping entry in the listing.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Enable the Chosen Mapping:</strong></p>
+            <ul>
+              <li>Click on the "Enable" link/button associated with the specific mapping you wish to use for contact creation.</li>
+              <li>Activating this mapping will set it as the current configuration for sending data to ActiveCampaign during contact creation.</li>
+            </ul>
+          </li>
+        </ol>
+        <p>By following these steps, you can easily switch between different mappings that have been previously created and enable the specific mapping you want to use for contact creation within ActiveCampaign through your Drupal website.</p></p>
+      </div>
+
+      <button class="accordion">To interact with ActiveCampaign lists within your Drupal website, here's how you can manage them using the provided functionalities:</button>
+      <div class="panel">
+        <p><ol>
+          <li>
+            <p><strong>Access the ActiveCampaign Lists Section:</strong></p>
+            <ul>
+              <li>Log in to your Drupal admin panel.</li>
+              <li>Look for a tab or section named "ActiveCampaign Lists" to manage your ActiveCampaign lists from within Drupal.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>View Existing Lists:</strong></p>
+            <ul>
+              <li>Upon clicking the "ActiveCampaign Lists" tab, a table listing all existing lists within ActiveCampaign will be displayed.</li>
+              <li>Each row in the table represents a list and includes information such as the list name and actions you can perform.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Actions Dropdown for Each List:</strong></p>
+            <ul>
+              <li>In the "Actions" column of the table, there will be a dropdown menu associated with each list entry.</li>
+              <li>Clicking the dropdown menu will reveal options specific to that list.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Options in the Dropdown Menu:</strong></p>
+            <ul>
+              <li><strong>Use As Default:</strong>
+                <ul>
+                  <li>This option sets the selected list as the default list for automatically subscribing newly created contacts.</li>
+                </ul>
+              </li>
+              <li><strong>Details:</strong>
+                <ul>
+                  <li>Clicking this option opens a page displaying details about the selected list, including information about contacts subscribed to that list.</li>
+                </ul>
+              </li>
+              <li><strong>Delete:</strong>
+                <ul>
+                  <li>Use this option to delete the selected list from ActiveCampaign. A confirmation warning will likely appear to prevent accidental deletion.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Creating a New List:</strong></p>
+            <ul>
+              <li>The page should also include a form to create a new list in ActiveCampaign.</li>
+              <li>Fill out the necessary details in the form, such as the list name and any other required fields.</li>
+              <li>Submit the form to create the new list.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Confirmation of List Creation:</strong></p>
+            <ul>
+              <li>If the list creation is successful, the new list will appear in the table below the form, alongside the existing lists.</li>
+            </ul>
+          </li>
+        </ol>
+        <p>By utilizing the dropdown actions and the form provided on the "ActiveCampaign Lists" page within your Drupal admin panel, you can effectively manage your ActiveCampaign lists. This includes viewing existing lists, exploring details, setting default lists, deleting lists (with confirmation), and creating new lists directly from your Drupal interface.</p></p>
+      </div>
+
+      <button class="accordion">To manage contacts within ActiveCampaign via your Drupal interface in the "ActiveCampaign Contacts" tab, here's how the interaction typically works:</button>
+      <div class="panel">
+        <p><ol>
+          <li>
+            <p><strong>Accessing the ActiveCampaign Contacts Tab:</strong></p>
+            <ul>
+              <li>Log in to your Drupal admin panel.</li>
+              <li>Navigate to the tab labeled "ActiveCampaign Contacts."</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Viewing Contacts in the Table:</strong></p>
+            <ul>
+              <li>Upon accessing this tab, you'll encounter a table displaying contacts existing within ActiveCampaign.</li>
+              <li>Each row represents an individual contact, and the table contains various details about these contacts.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Actions Column for Contact Operations:</strong></p>
+            <ul>
+              <li>In the "Actions" column of the table, you'll find a dropdown menu or links with options specific to each contact.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Options Available in the Actions Column:</strong></p>
+            <ul>
+              <li><strong>Assign List:</strong>
+                <ul>
+                  <li>Clicking this option allows you to subscribe a contact to a chosen list. This typically opens a page where you can select the list(s) to which you want to subscribe the contact.</li>
+                </ul>
+              </li>
+              <li><strong>Delete Contact:</strong>
+                <ul>
+                  <li>Use this option to delete the selected contact from ActiveCampaign. Confirmations may be required to prevent accidental deletion.</li>
+                </ul>
+              </li>
+              <li><strong>Deal On Contact:</strong>
+                <ul>
+                  <li>This option usually leads to a page with a form where you can create a deal related to the selected contact.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Managing Contacts Using Checkboxes:</strong></p>
+            <ul>
+              <li>The first column often contains checkboxes allowing you to select multiple contacts individually or select all contacts at once.</li>
+              <li>Below the table, you'll likely find buttons such as "Assign List," "Delete Contacts," and "Deal n Contacts" (where "n" indicates the number of selected contacts).</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Performing Actions on Selected Contacts:</strong></p>
+            <ul>
+              <li>After selecting contacts using the checkboxes, you can use the respective buttons (Assign List, Delete Contacts, Deal n Contacts) to perform the desired action on all selected contacts simultaneously.</li>
+            </ul>
+          </li>
+        </ol>
+        <p>By utilizing these options and functionalities available in the "ActiveCampaign Contacts" tab within your Drupal admin panel, you can effectively manage your contacts in ActiveCampaign without directly accessing the ActiveCampaign dashboard.</p></p>
+      </div>
+
+      <button class="accordion">To manage pipelines and stages within ActiveCampaign via your Drupal interface:</button>
+      <div class="panel">
+        <p><p><strong>ActiveCampaign Pipelines:</strong></p>
+        <ol>
+          <li>
+            <p><strong>Accessing the ActiveCampaign Pipelines Tab:</strong></p>
+            <ul>
+              <li>Log in to your Drupal admin panel.</li>
+              <li>Navigate to the tab labeled "ActiveCampaign Pipelines."</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Creating a New Pipeline:</strong></p>
+            <ul>
+              <li>The page will likely have a form to create a new pipeline in ActiveCampaign.</li>
+              <li>Fields in the form typically include:
+                <ul>
+                  <li><strong>Title:</strong> A text field to name the new pipeline.</li>
+                  <li><strong>Currency:</strong> A select field allowing you to choose a supported currency for the pipeline.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Viewing Existing Pipelines and Stages:</strong></p>
+            <ul>
+              <li>Below the creation form, there will be a table displaying all existing pipelines in ActiveCampaign.</li>
+              <li>The table might also include information about the available stages within each pipeline.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Note on Pipeline Requirement:</strong></p>
+            <ul>
+              <li>To create a deal in ActiveCampaign, at least one pipeline must exist.</li>
+            </ul>
+          </li>
+        </ol>
+        <p><strong>ActiveCampaign Stages:</strong></p>
+        <ol>
+          <li>
+            <p><strong>Accessing the ActiveCampaign Stages Tab:</strong></p>
+            <ul>
+              <li>Navigate to the tab labeled "ActiveCampaign Stages."</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Creating a New Stage:</strong></p>
+            <ul>
+              <li>The page will display a form to create a new stage for a pipeline in ActiveCampaign.</li>
+              <li>Fields in the form usually include:
+                <ul>
+                  <li><strong>Pipeline:</strong> A select field with options of existing pipelines to choose from.</li>
+                  <li><strong>Title:</strong> A text field to name the new stage.</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Viewing Existing Stages:</strong></p>
+            <ul>
+              <li>The page will also contain a table showing all existing stages within their respective pipelines.</li>
+              <li>One of the columns in this table will likely indicate the pipeline to which each stage belongs.</li>
+            </ul>
+          </li>
+        </ol>
+        <p>By utilizing these tabs and the provided forms and tables within your Drupal interface, you can create and manage pipelines and stages in ActiveCampaign. This allows you to structure your deals effectively and set up the necessary stages for your sales or workflow processes without directly accessing the ActiveCampaign dashboard.</p></p>
+      </div>
+
+      <button class="accordion">How to Create deal using deal form</button>
+      <div class="panel">
+        <p>
+        <p>When using the "Create Deal" form, you're presented with a field called "Select Options" that offers two distinct options for handling deal creation for listed contacts:</p>
+        <ol>
+          <li>
+            <p><strong>Create this deal for all listed contacts individually:</strong></p>
+            <ul>
+              <li>Choosing this option will result in the deal being duplicated for each selected contact individually.</li>
+              <li>For example, if you select three contacts and create a deal with this option, three separate instances of the same deal will be created, with each deal associated with one of the selected contacts individually.</li>
+            </ul>
+          </li>
+          <li>
+            <p><strong>Create one deal for all contacts listed:</strong></p>
+            <ul>
+              <li>Opting for this choice will create a single deal that encompasses all the selected contacts.</li>
+              <li>In this scenario, the deal will be associated with multiple contacts, aggregating them under one single deal in ActiveCampaign.</li>
+            </ul>
+          </li>
+        </ol>
+        <p>Regarding the rest of the fields in the "Create Deal" form, they likely consist of standard details required for setting up a deal, such as deal name, value, expected close date, deal stage, etc. Simply fill in these fields with the appropriate information as needed.</p>
+        <p>This flexibility allows you to either create individual deals for each contact or group multiple contacts under a single deal, depending on how you want to manage your deals and contacts within ActiveCampaign through your Drupal interface.</p>
+        </p>
+      </div>
+
+{#      <button class="accordion">Section 3</button>#}
+{#      <div class="panel">#}
+{#        <p>Lorem ipsum...</p>#}
+{#      </div>#}
+    </div>
+  </div>
+</div>

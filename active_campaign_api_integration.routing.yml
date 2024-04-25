@@ -1,0 +1,251 @@
+active_campaign_api_integration.api_keys:
+  path: 'admin/config/active-campaign/active-campaign-settings'
+  defaults:
+    _form: '\Drupal\active_campaign_api_integration\Form\ActiveCampaignForm'
+    _title: 'Active Campaign'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.form_target:
+  path: 'admin/config/active-campaign/active-campaign-forms'
+  defaults:
+    _form: '\Drupal\active_campaign_api_integration\Form\TargetForm'
+    _title: 'Active Campaign Target Form'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.form_mapper:
+  path: 'admin/config/active-campaign/active-campaign-form-map/{form_id}'
+  defaults:
+    _form: '\Drupal\active_campaign_api_integration\Form\MapperForm'
+    _title: 'Active Campaign Map Fields'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.mapper:
+  path: 'admin/config/active-campaign/active-campaign-map-listing'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\ListingForm::listing'
+    _title: 'Active Campaign Listing Forms'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.map_user_list:
+  path: 'admin/config/active-campaign/active-campaign-map-user'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\ListingForm::userMappingListing'
+    _title: 'ActiveCampaign Mapping Listing'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.dashboard:
+  path: 'admin/config/active-campaign'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\DashboardCampaign::dashboard'
+    _title: 'Active Campaign'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+
+active_campaign_api_integration.how_to_mapping:
+  path: 'admin/config/active-campaign/active-campaign-mapping-help'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\MappingHelp::helping'
+    _title: 'Active Campaign Listing Forms'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.keys:
+  path: 'admin/config/active-campaign/active-campaign-keys'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\KeysController::listingKeys'
+    _title: 'ActiveCampaign Keys'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.form_registration_set_up:
+  path: 'admin/config/active-campaign/active-campaign-configuration'
+  defaults:
+    _form: '\Drupal\active_campaign_api_integration\Form\MapperFormRegistration'
+    _title: 'Active Campaign Map Fields'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+
+active_campaign_api_integration.campaign_attaching:
+  path: 'admin/config/active-campaign/active-campaign-configuration-attachment'
+  defaults:
+    _form: '\Drupal\active_campaign_api_integration\Form\MapperFormAttachment'
+    _title: 'Active Campaign Map Fields'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.listing:
+  path: 'admin/config/active-campaign/active-campaign/lists'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\ActiveCampaignLists::listing'
+    _title: 'ActiveCampaign Lists'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.default_list:
+  path: 'admin/config/active-campaign/lists/default/{list}'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\ActiveCampaignLists::defaultConfiguration'
+    _title: 'ActiveCampaign Default List'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.list_unsubscription:
+  path: 'admin/config/active-campaign/lists/unsubscribe/{contacts}/{list}'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\ActiveCampaignLists::unsubscribingContacts'
+    _title: 'ActiveCampaign Default List'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.contacts:
+  path: 'admin/config/active-campaign/contacts'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\Contacts::listing'
+    _title: 'ActiveCampaign Contacts'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.contacts_imports:
+  path: 'admin/config/active-campaign/contact/imports'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\Contacts::importing'
+    _title: 'Contacts'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.contacts_import:
+  path: 'admin/config/active-campaign/contact/imports/user/{uid}'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\Contacts::import'
+    _title: 'Contacts'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.deletions:
+  path: 'admin/config/active-campaign/contact/delete/{contacts}'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\Deletions::confirmation'
+    _title: 'ActiveCampaign Contacts'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.list_deletions:
+  path: 'admin/config/active-campaign/lists/delete/{lists}'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\Deletions::listConfirmation'
+    _title: 'ActiveCampaign Lists'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.update_list_contact:
+  path: 'admin/config/active-campaign/contact/list/{contacts}'
+  defaults:
+    _form: '\Drupal\active_campaign_api_integration\Form\UpdateContactListForm'
+    _title: 'Active Campaign'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.create_deal:
+  path: 'admin/config/active-campaign/contact/deal/{contacts}'
+  defaults:
+    _form: '\Drupal\active_campaign_api_integration\Form\DealsForm'
+    _title: 'Active Campaign'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.create_pipeline:
+  path: 'admin/config/active-campaign/pipelines/create'
+  defaults:
+    _form: '\Drupal\active_campaign_api_integration\Form\CreatePipelineForm'
+    _title: 'Active Campaign'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.create_stage:
+  path: 'admin/config/active-campaign/stages/create'
+  defaults:
+    _form: '\Drupal\active_campaign_api_integration\Form\CreateStageForm'
+    _title: 'Active Campaign'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.pipelines:
+  path: 'admin/config/active-campaign/pipelines'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\Pipelines::displayAll'
+    _title: 'ActiveCampaign Pipelines'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.stages:
+  path: 'admin/config/active-campaign/stages'
+  defaults:
+    _controller: '\Drupal\active_campaign_api_integration\Controller\Stages::displayAll'
+    _title: 'ActiveCampaign Stages'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE
+
+active_campaign_api_integration.list_creation:
+  path: 'admin/config/active-campaign/lists/create'
+  defaults:
+    _form: '\Drupal\active_campaign_api_integration\Form\CreateListForm'
+    _title: 'Active Campaign'
+  requirements:
+    _permission: 'administrator'
+  options:
+    _admin_route: TRUE

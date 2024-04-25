@@ -1,0 +1,376 @@
+<?php
+
+/**
+ * @file
+ * Module file to handle submissions.
+ */
+
+use Drupal\active_campaign_api_integration\Plugin\ApiCaller;
+use Drupal\active_campaign_api_integration\Plugin\StoragesHandlers;
+use Drupal\active_campaign_api_integration\Plugin\TypeApiCalling;
+use Drupal\Core\Config\ImmutableConfig;
+use Drupal\Core\Database\Connection;
+use Drupal\Core\Database\Database;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\StringTranslation\TranslationManager;
+use Drupal\Core\Url;
+use Drupal\user\UserInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * Theme hook to register cards templates.
+ *
+ * @return array[]
+ *   theme to be used
+ */
+function active_campaign_api_integration_theme(): array {
+  return [
+    'forms_listing_campaign' => [
+      'variables' => [
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'forms_listing_campaign',
+    ],
+    'campaign_how_to_map' => [
+      'variables' => [
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'campaign_how_to_map',
+    ],
+    'campaign_dashboard' => [
+      'variables' => [
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'campaign_dashboard',
+    ],
+    'campaign_keys_listing' => [
+      'variables' => [
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'campaign_keys_listing',
+    ],
+    'user_listing_campaign' => [
+      'variables' => [
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'user_listing_campaign',
+    ],
+    'listing_campaign_activecampaign' => [
+      'variables' => [
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'listing_campaign_activecampaign',
+    ],
+    'campaign_contacts_lists' => [
+      'variables' => [
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'campaign_contacts_lists',
+    ],
+    'confirmation_campaign_activecampaign' => [
+      'variables' => [
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'confirmation_campaign_activecampaign',
+    ],
+    'campaign_listing_pipelines' => [
+      'variables' => [
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'campaign_listing_pipelines',
+    ],
+    'campaign_listing_stages' => [
+      'variables' => [
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'campaign_listing_stages',
+    ],
+    'campaign_contacts_list_info' => [
+      'variables' => [
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'campaign_contacts_list_info',
+    ],
+    'campaign_contacts_imports' => [
+      'variables' => [
+        'title' => NULL,
+        'content' => NULL,
+      ],
+      'template' => 'campaign_contacts_imports',
+    ],
+  ];
+}
+
+/**
+ * We are using this hook to attach handlers to form per form id collected.
+ *
+ * Implements hook_form_alter().
+ */
+function active_campaign_api_integration_form_alter(&$form, FormStateInterface $form_state, $form_id): void {
+
+  $storages = new StoragesHandlers(Drupal::database());
+  $forms = $storages->formsAdded();
+
+  // We are checking for a particular form if visited we don't need all
+  // forms on site. Therefore, we only need form which have been mapped for
+  // ActiveCampaign.
+  foreach ($forms as $value) {
+    if (!empty($value['form']) && $value['form'] === $form_id) {
+      $maps = $storages->mapping($value['id']);
+      if (!empty($maps)) {
+        foreach ($maps as $map) {
+          // Lets attach handler to form.
+          active_campaign_api_integration_mapping_handlers($form, $form_state, $map['type']);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * This function will be called to attach handlers to forms if visited.
+ *
+ * @param array $form
+ *   Form Definition.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state submitted.
+ * @param string $type
+ *   Type of action to be done.
+ *
+ * @return void
+ *   Nothing is returned.
+ */
+function active_campaign_api_integration_mapping_handlers(array &$form,
+ FormStateInterface $form_state,
+  string $type): void {
+
+  switch ($type) {
+    case 'contact_sync':
+      $form['actions']['submit']['#submit'][] = 'active_campaign_api_integration_contact_sync';
+      break;
+
+    case 'contact_add':
+      $form['actions']['submit']['#submit'][] = 'active_campaign_api_integration_contact_add';
+      break;
+
+    // Continue extending with more handlers for more ActiveCampaign features.
+    default:
+      break;
+  }
+}
+
+/**
+ * This function is only applicable to a contact Sync type of action.
+ *
+ * @param array $form
+ *   Form Definition array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Formstate submitted.
+ *
+ * @return void
+ *   Nothing as call goes to TypeCalling Class.
+ */
+function active_campaign_api_integration_contact_sync(array &$form, FormStateInterface $form_state): void {
+  (new TypeApiCalling(Drupal::database()))->contactSyncHandler($form_state);
+}
+
+/**
+ * For adding contact.
+ *
+ * @param array $form
+ *   Form array.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   Formstate submitted.
+ *
+ * @return void
+ *   Nothing returned.
+ */
+function active_campaign_api_integration_contact_add(array &$form,
+                              FormStateInterface $form_state): void {
+  (new TypeApiCalling(Drupal::database()))->contactAddHandler($form_state);
+}
+
+/**
+ * Collecting user just created to ActiveCampaign.
+ *
+ * @param \Drupal\user\UserInterface $account
+ *   Just created an account.
+ *
+ * @return void
+ *   Nothing is returned
+ */
+function active_campaign_api_integration_user_insert(UserInterface $account): void {
+  $storage = new StoragesHandlers(Drupal::database());
+  $userConfig = $storage->userMappingconfiguration(FALSE);
+  if (!empty($userConfig)) {
+    $mapping = $userConfig[0]->mapping ?? NULL;
+    if (!empty($mapping)) {
+      $mapping = json_decode($mapping, TRUE);
+      if (gettype($mapping) === "array") {
+        $data = [];
+        foreach ($mapping as $key => $item) {
+          $value = $account->get($item)->getValue() ?? NULL;
+          if (!empty($value)) {
+            $data[$key] = $value[0]['value'] ?? "No data found";
+          }
+        }
+
+        $fields = (new ApiCaller())->customFieldsList();
+        $lists = array_map(function ($item) {
+          return $item['id'];
+        }, $fields);
+
+        $custom = [];
+        foreach ($lists as $list) {
+          if (isset($data[$list])) {
+            $custom[] = ['field' => $list, 'value' => $data[$list]];
+            unset($data[$list]);
+          }
+        }
+
+        if (!empty($custom)) {
+          $data['fieldValues'] = $custom;
+        }
+
+        (new TypeApiCalling(Drupal::database()))
+          ->sendingUserContact($data);
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_help().
+ */
+function active_campaign_api_integration_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    case 'help.page.active_campaign_api_integration':
+      $output = '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This module integrates with the ActiveCampaign API and allows users to map registration form fields to ActiveCampaign fields for automatic data transfer.') . '</p>';
+      $output .= '<h3>' . t('Configuring the module') . '</h3>';
+      $output .= '<ol>';
+      $output .= '<li>' . t('Get your API keys from <a href="https://www.activecampaign.com" target="_blank">ActiveCampaign</a> site.') . '</li>';
+      $output .= '<li>' . t('Check your keys <a href=":active-campaign-keys"><u>here</u></a> page.', [':active-campaign-keys' => Url::fromRoute('active_campaign_api_integration.keys')->toString()]) . '</li>';
+      $output .= '<li>' . t('Go to Campaign Dashboard on your site and map your registration form fields with ActiveCampaign.') . '</li>';
+      $output .= '<li>' . t('To map registration form fields, visit the <a href=":registration-form-link"><u>Registration Form</u></a> page.', [':registration-form-link' => Url::fromRoute('active_campaign_api_integration.form_registration_set_up')->toString()]) . '</li>';
+      $output .= '<li>' . t('Make sure at least one mapping is enabled else no data will be sent to ActiveCampaign on user creation.') . '</li>';
+      $output .= '<li>' . t('To switch mapping templates, first add user mapping using the User Registration Form. When done and saved, visit <a href=":mapping-listing-link"><u>ActiveCampaign Mapping Listing</u></a>.', [
+        ':mapping-listing-link' => Url::fromRoute('active_campaign_api_integration.map_user_list')->toString(),
+      ]) . '</li>';
+      $output .= '</ol>';
+      return $output;
+  }
+}
+
+/**
+ * Database connection creation.
+ *
+ * @return \Drupal\Core\Database\Connection
+ *   Return connection.
+ */
+function active_campaign_api_integration_db(): Connection {
+  return Drupal::database();
+}
+
+/**
+ * Logger object interface.
+ *
+ * @return \Psr\Log\LoggerInterface
+ *   Logger object returned.
+ */
+function active_campaign_api_integration_logger(): LoggerInterface {
+  return Drupal::logger("active_campaign_api_integration");
+}
+
+/**
+ * System info config.
+ *
+ * @return \Drupal\Core\Config\ImmutableConfig
+ *   Returns ImmutableConfig.
+ */
+function active_campaign_api_integration_site(): ImmutableConfig {
+  return Drupal::config("system.site");
+}
+
+/**
+ * Get a translation object.
+ *
+ * @return \Drupal\Core\StringTranslation\TranslationManager
+ *   Translation object.
+ */
+function active_campaign_api_integration_translation(): TranslationManager {
+  return \Drupal::translation();
+}
+
+/**
+ * Request object is returned.
+ *
+ * @return \Symfony\Component\HttpFoundation\Request
+ *   Return Request object.
+ */
+function active_campaign_api_integration_request(): Request {
+  return Drupal::request();
+}
+
+/**
+ * Messenger Interface object.
+ *
+ * @return \Drupal\Core\Messenger\MessengerInterface
+ *   Return messenger interface.
+ */
+function active_campaign_api_integration_msg(): MessengerInterface {
+  return Drupal::messenger();
+}
+
+/**
+ * Get fields in given table.
+ *
+ * @param string $table_name
+ *   Table name.
+ *
+ * @return array
+ *   Fields found in table except auto_increment field.
+ */
+function active_campaign_api_integration_schemas(string $table_name): array {
+  $connection = Database::getConnection();
+  if ($connection->schema()->tableExists($table_name)) {
+    $query = "SHOW COLUMNS FROM {" . $table_name . "}";
+    $columns = $connection->query($query)->fetchAllAssoc('Field',
+      \PDO::FETCH_ASSOC);
+    $results = [];
+    foreach ($columns as $column_name => $column_info) {
+      if ($column_info['Extra'] === 'auto_increment') {
+        unset($columns[$column_name]);
+      }
+      else {
+        $results[] = $column_info['Field'] ?? NULL;
+      }
+    }
+    return array_filter($results, 'strlen');
+  }
+  return [];
+}
+
+/**
+ * Getting renderer service.
+ *
+ * @return mixed
+ *   Return renderer service.
+ */
+function active_campaign_api_integration_renderer(): mixed {
+  return \Drupal::service('renderer');
+}

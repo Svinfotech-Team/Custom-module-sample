@@ -1,0 +1,18 @@
+<div class="container" id="confirm-deletions">
+  <p>Are you sure you want to {{ content.name }} from ActiveCampaign?</p>
+  {% if content.contacts %}
+    <ul>
+      {% for contact in content.contacts %}
+        {% if contact.email  %}
+          <li>{{ contact.email }}</li>
+        {% elseif contact.name %}
+          <li>{{ contact.name }}</li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <div class="delete">
+    <a class="btn-delete" href="{{ content.delete }}">Yes Delete</a>
+    <a class="btn-cancel" href="{{ content.cancel }}">No Cancel</a>
+  </div>
+</div>

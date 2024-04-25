@@ -1,0 +1,6 @@
+manager_assets:
+  css:
+    theme:
+      assets/css/campaign_pages.css: {}
+  js:
+    assets/js/formactivecontacts.js: {}

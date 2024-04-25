@@ -1,0 +1,191 @@
+<?php
+
+/**
+ * @file
+ * Drupal Install file.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function active_campaign_api_integration_schema(): array {
+  $schema = [];
+
+  // Define the table for storing Active Campaign settings.
+  $schema['active_campaign_settings'] = [
+    'description' => 'Table for Active Campaign settings',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique identifier for settings',
+      ],
+      'url' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Active Campaign URL',
+        'default' => '',
+      ],
+      'api_key' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Active Campaign API Key',
+        'default' => '',
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  // Define the table for storing form data.
+  $schema['campaign_forms_added'] = [
+    'description' => 'Table for custom form data',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique identifier for form data',
+      ],
+      'form_id' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Form ID entered by the user',
+      ],
+      'form_label' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Form label entered by the user',
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  // Define the table for your custom data.
+  $schema['campaign_mapping'] = [
+    'description' => 'Custom table for Mapper Form data',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique identifier for each record.',
+      ],
+      'form_id' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Form ID associated with the mapping data.',
+      ],
+      'mapping' => [
+        'type' => 'text',
+        'size' => 'medium',
+        'not null' => TRUE,
+        'description' => 'Mapping data from the form in JSON format.',
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  // Define the table for your custom data.
+  $schema['campaign_contacts'] = [
+    'description' => 'Table for campaign contacts',
+    'fields' => [
+      'contact_id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique identifier for each contact.',
+      ],
+      'active_id' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Campaign Contact id of the contact.',
+      ],
+      'firstname' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Firstname of the contact.',
+      ],
+      'email' => [
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Email of the contact.',
+      ],
+    ],
+    'primary key' => ['contact_id'],
+  ];
+
+  // Define the table for your custom data.
+  $schema['campaign_users_map'] = [
+    'description' => 'Table for campaign user contact',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique identifier for each contact.',
+      ],
+      'active' => [
+        'type' => 'varchar',
+        'length' => 10,
+        'not null' => TRUE,
+        'description' => 'Campaign Contact id of the contact.',
+      ],
+      'list' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'null' => TRUE,
+        'description' => 'Campaign list id of the contact.',
+      ],
+      'map' => [
+        'type' => 'varchar',
+        'length' => 400,
+        'not null' => TRUE,
+        'description' => 'Map of fields of the contact.',
+      ],
+      'name' => [
+        'type' => 'varchar',
+        'length' => 400,
+        'not null' => TRUE,
+        'description' => 'Map name of the contact.',
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  // Define the table for your custom data.
+  $schema['campaign_list_defaults'] = [
+    'description' => 'Table for campaign default used list',
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'description' => 'Primary Key: Unique identifier for each contact.',
+      ],
+      'enabled_status' => [
+        'type' => 'varchar',
+        'length' => 10,
+        'not null' => TRUE,
+        'description' => 'Campaign list enabled status',
+      ],
+      'list_id' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'null' => TRUE,
+        'description' => 'Campaign list id.',
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  return $schema;
+}

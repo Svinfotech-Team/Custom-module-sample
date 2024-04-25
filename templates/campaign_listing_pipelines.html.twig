@@ -1,0 +1,34 @@
+<div class="table-responsive">
+  <table class="table table-striped">
+    <caption>Pipelines on ActiveCampaign</caption>
+    <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Currency</th>
+      <th scope="col">Created</th>
+      <th scope="col">Stages</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% if content.lists %}
+      {% for pipeline in content.lists %}
+        <tr>
+          <th>{{ pipeline.title }}</th>
+          <td>{{ pipeline.currency }}</td>
+          <td>{{ pipeline.created }}</td>
+          <td>
+            <div class="dropdown">
+              <button class="dropbtn">Stages Attached</button>
+              <div class="dropdown-content">
+                {% for stage in pipeline.stages %}
+                  <a href="#">{{ stage }}</a>
+                {% endfor %}
+              </div>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    {% endif %}
+    </tbody>
+  </table>
+</div>

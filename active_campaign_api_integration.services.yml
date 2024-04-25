@@ -1,0 +1,6 @@
+services:
+  active_campaign_api_integration.request_handler:
+    class: Drupal\active_campaign_api_integration\Plugin\RequestHandler
+  active_campaign_api_integration.user_loader:
+    class: Drupal\active_campaign_api_integration\Plugin\UsersService
+    arguments: [ '@entity_type.manager' ]

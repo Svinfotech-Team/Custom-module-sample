@@ -1,0 +1,46 @@
+<div class="table-responsive" id="base" data="{{ content.base }}">
+  <div>
+    <p>
+      Do you want to import from your site to ActiveCampaign?&nbsp;
+      <a href="{{ content.base }}/admin/config/active-campaign/contact/imports">check available</a>
+    </p>
+  </div>
+  <table class="table table-striped-columns" id="contact-listing-table">
+    <thead>
+    <tr>
+      <td><input type="checkbox" id="select-all"></td>
+      <th scope="col">Contact ID</th>
+      <th scope="col">Email</th>
+      <th scope="col">FirstName</th>
+      <th scope="col">LastName</th>
+      <th scope="col">Phone</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for contact in content.contacts  %}
+      <tr>
+        <td><input type="checkbox" value="{{ contact.id }}" class="single-check"></td>
+        <th scope="row">{{ contact.id }}</th>
+        <td>{{ contact.email }}</td>
+        <td>{{ contact.firstName }}</td>
+        <td>{{ contact.lastName }}</td>
+        <td>{{ contact.phone }}</td>
+        <td>
+          <div class="dropdown">
+            <button class="dropbtn">actions</button>
+            <div class="dropdown-content">
+              <a class="dropdown-item" href="{{ content.base }}/admin/config/active-campaign/contact/list/{{ contact.id }}">Assign List</a>
+              <a class="dropdown-item" href="{{ content.base }}/admin/config/active-campaign/contact/delete/{{ contact.id }}">Delete Contact</a>
+              <a class="dropdown-item" href="{{ content.base }}/admin/config/active-campaign/contact/deal/{{ contact.id }}">Deal On Contact</a>
+            </div>
+          </div>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div id="selected-actions">
+
+</div>

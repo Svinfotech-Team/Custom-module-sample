@@ -1,0 +1,20 @@
+{
+    "name": "drupal/active_campaign_api_integration",
+    "description": "Facilitates quick and easy uses of ActiveCampaign API",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "autoload": {
+        "psr-4": {
+            "Drupal\\Campaign\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Neha Verma",
+            "email": "nehaverma94163@gmail.com"
+        }
+    ],
+    "require": {
+      "ext-intl": "*"
+    }
+}

@@ -1,0 +1,22 @@
+{% if content.lists %}
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="col">Title</th>
+        <th scope="col">Created</th>
+        <th scope="col">Pipeline</th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for stage in content.lists %}
+        <tr>
+          <td>{{ stage.title }}</td>
+          <td>{{ stage.cdate }}</td>
+          <td>{{ stage.group }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endif %}
